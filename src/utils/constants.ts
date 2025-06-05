@@ -1,3 +1,3 @@
 
 
-export const loginURL = 'https://www.automationexercise.com/login';
+export const loginPath = '/login';

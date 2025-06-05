@@ -1,9 +1,8 @@
 import { test, expect, type Page } from '@playwright/test'
 import { SignupPage } from '../../pages/SignupPage'
-import * as constants from '../../utils/constants'
 import * as testData from '../../utils/testData'
 
-test.describe('Registering new users', () => {
+test.describe('Tests for registering new users - different approaches', () => {
 
     let signupPage: SignupPage;
 
@@ -17,7 +16,7 @@ test.describe('Registering new users', () => {
     });
 
 
-    test.only("Register new user", async ({page}) => {
+    test("Register new user using generated Faker information", async ({page}) => {
 
         const userData = testData.generateRandomUser();
 
@@ -49,18 +48,19 @@ test.describe('Registering new users', () => {
         await signupPage.city.fill(userData.city);
         await signupPage.zip.fill(userData.zipCode);
         await signupPage.phone.fill(userData.phone);
-        await page.waitForTimeout(5000);
 
         //submit
         await signupPage.submitButton.click();
-        await page.waitForTimeout(5000);
+        await expect(signupPage.accountCreated).toBeVisible();
+        await signupPage.continueButton.click();
+        await expect(signupPage.categoryHeading).toBeVisible();
 
-
-
-
-    
     });
 
+    test("Register new user based on the country selected", async ({page}) => {
+
+
+    });
 });
 
 

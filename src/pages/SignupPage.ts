@@ -1,5 +1,5 @@
 import { expect, type Locator, type Page } from '@playwright/test';
-import { loginURL } from '../utils/constants';
+import { loginPath } from '../utils/constants';
 
 export class SignupPage {
 //login page
@@ -33,6 +33,10 @@ readonly city: Locator;
 readonly zip: Locator;
 readonly phone: Locator;
 readonly submitButton: Locator;
+//account created
+readonly accountCreated: Locator;
+readonly continueButton: Locator;
+readonly categoryHeading: Locator;
 
 
 constructor(page: Page) {
@@ -64,12 +68,13 @@ constructor(page: Page) {
     this.zip = page.locator('#zipcode');
     this.phone = page.locator('#mobile_number');
     this.submitButton = page.getByRole('button', {name: 'Create Account'});
-
-    
+    this.accountCreated = page.getByRole('heading', { name: 'Account Created!' });
+    this.continueButton = page.getByRole('link', { name: 'Continue'});
+    this.categoryHeading = page.getByRole('heading', { name: 'Category' });
   }
 
   async goToLoginPage(){
-    await this.page.goto(loginURL);
+    await this.page.goto(loginPath);
   }
 
   async enterName(name: string){
