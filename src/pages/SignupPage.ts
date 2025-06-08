@@ -1,5 +1,7 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { loginPath } from '../utils/constants';
+import * as testData from '../utils/testData';
+import * as constants from '../utils/constants'
 
 export class SignupPage {
 //login page
@@ -123,5 +125,43 @@ constructor(page: Page) {
   async selectCountry(country: string){
     this.country.selectOption(country)
     
+  }
+
+  async registerUserFromCountry(user: testData.User){
+    
+      //enter and submit random Name and email
+         
+        await this.enterName(user.firstName);
+        await this.enterEmail(constants.userEmail);
+        await this.signupButton.click();
+        await expect(this.signupForm).toBeVisible();
+
+        //enter account information section
+        await this.pickRandomGender();
+        await this.checkNameField(user.firstName); 
+        await this.checkEmailField(constants.userEmail);
+        await this.password.fill(constants.userPassword)
+        
+        await this.setRandomBirhday(); 
+        await this.clickCheckbox(this.checkboxNewsletter)
+        await this.clickCheckbox(this.checkboxSpecialOffers)
+
+        //address information section
+        await this.firstName.fill(user.firstName);
+        await this.lastName.fill(user.lastName);
+        await this.company.fill(user.company);
+        await this.address1.fill(user.address1);
+        await this.address2.fill(user.address2);
+        await this.selectCountry(user.country);
+        await this.state.fill(user.state);
+        await this.city.fill(user.city);
+        await this.zip.fill(user.zip);
+        await this.phone.fill(user.phone);
+
+        //submit
+        await this.submitButton.click();
+        await expect(this.accountCreated).toBeVisible();
+        await this.continueButton.click();
+        await expect(this.categoryHeading).toBeVisible();
   }
 }

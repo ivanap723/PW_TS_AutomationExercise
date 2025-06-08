@@ -12,16 +12,16 @@ test.describe('Tests for registering new users - different approaches', () => {
     
         await signupPage.goToLoginPage();
         await expect(signupPage.signupButton).toBeVisible();
+        await signupPage.consentButton.click();
     
     });
 
 
-    test("Register new user using generated Faker information", async ({page}) => {
+    test.skip("Register new user from specific country using generated Faker information", async ({page}) => {
 
         const userData = testData.generateRandomUser();
 
-        //enter and submit random Name and email
-        await signupPage.consentButton.click(); 
+        //enter and submit random Name and email 
         await signupPage.enterName(userData.firstName);
         await signupPage.enterEmail(userData.email);
         await signupPage.signupButton.click();
@@ -57,9 +57,32 @@ test.describe('Tests for registering new users - different approaches', () => {
 
     });
 
-    test("Register new user based on the country selected", async ({page}) => {
+    test("Register new users from India", async ({page}) => {
+        await signupPage.registerUserFromCountry(testData.IndiaUser)
+    });
 
+    test("Register new users from USA", async ({page}) => {
+    await signupPage.registerUserFromCountry(testData.USAUser)
+    });
 
+    test("Register new users from Canada", async ({page}) => {
+    await signupPage.registerUserFromCountry(testData.CanadaUser)
+    });
+
+    test("Register new users from Australia", async ({page}) => {
+    await signupPage.registerUserFromCountry(testData.AustraliaUser)
+    });
+
+    test("Register new users from Israel", async ({page}) => {
+    await signupPage.registerUserFromCountry(testData.IsraelUser)
+    });
+
+    test("Register new users from New Zealand", async ({page}) => {
+    await signupPage.registerUserFromCountry(testData.NewZealandUser)
+    });
+
+    test("Register new users from Singapore", async ({page}) => {
+    await signupPage.registerUserFromCountry(testData.SingaporeUser)
     });
 });
 

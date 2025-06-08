@@ -32,7 +32,20 @@ export function generateRandomUser(){
 
 }
 
-export const IndiaUser = {
+export interface User {
+    firstName: string,
+    lastName: string,
+    company: string,
+    address1: string,
+    address2: string,
+    state: string,
+    city: string,
+    zip: string,
+    phone: string,
+    country: string
+}
+
+export const IndiaUser: User = {
     firstName: 'Ishaan',
     lastName: 'Sharma',
     company: 'Best Sharma',
@@ -45,7 +58,7 @@ export const IndiaUser = {
     country: 'India'
 }
 
-export const USAUser = {
+export const USAUser: User = {
     firstName: 'Peter',
     lastName: 'Peterson',
     company: 'Peter&Sons',
@@ -58,7 +71,7 @@ export const USAUser = {
     country: 'USA'
 }
 
-export const CanadaUser = {
+export const CanadaUser: User = {
     firstName: 'John',
     lastName: 'Johnson',
     company: 'Johnson Science',
@@ -71,7 +84,7 @@ export const CanadaUser = {
     country: 'Canada'
 }
 
-export const AustraliaUser = {
+export const AustraliaUser: User = {
     firstName: 'Samantha',
     lastName: 'Hendrickson',
     company: 'Kangaroo',
@@ -84,7 +97,7 @@ export const AustraliaUser = {
     country: 'Australia'
 }
 
-export const IsraelUser = {
+export const IsraelUser: User = {
     firstName: 'Ariel',
     lastName: 'Perez',
     company: 'PerezCompany',
@@ -97,7 +110,7 @@ export const IsraelUser = {
     country: 'Israel'
 }
 
-export const NewZealandUser = {
+export const NewZealandUser: User = {
     firstName: 'Tepapa',
     lastName: 'Tongarewa',
     company: 'Te Papa',
@@ -110,7 +123,7 @@ export const NewZealandUser = {
     country: 'NewZealand'
 }
 
-export const SingaporeUser = {
+export const SingaporeUser: User = {
     firstName: 'Singy',
     lastName: 'Poor',
     company: 'Ice Cream Factory',
