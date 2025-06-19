@@ -1,7 +1,10 @@
 import { Faker , en_US , en} from '@faker-js/faker';
 
 const faker = new Faker({locale: [en_US, en]});
+export let generatedEmail: string;
 
+
+//generating random user with Faker
 export function generateRandomUser(){
     const firstName = faker.person.firstName();
     const lastName = faker.person.lastName();
@@ -14,7 +17,6 @@ export function generateRandomUser(){
     const city = faker.location.city();
     const zipCode = faker.location.zipCode();
     const phone = faker.phone.number({ style: 'national' });
-
 
     return {
         firstName,
@@ -29,8 +31,31 @@ export function generateRandomUser(){
         zipCode,
         phone
     };
-
 }
+
+//generate random email without using Faker
+export function generateRandomEmail(): string {
+  const timestamp = Date.now();
+  const randomSuffix = Math.floor(Math.random() * 10000);
+  let randomEmail = `user${timestamp}${randomSuffix}@example.com`;
+
+  setGeneratedEmail(randomEmail);
+
+  return randomEmail;
+}
+
+//------------------------------Get and Set functions---------------------------
+
+export function setGeneratedEmail(generatedString: string)
+{
+    generatedEmail = generatedString;
+}
+export function getGeneratedEmail()
+{
+    return generatedEmail;
+}
+
+//-------------------------------User Data----------------------------------------
 
 export interface User {
     firstName: string,

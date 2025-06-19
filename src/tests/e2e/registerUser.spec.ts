@@ -5,6 +5,7 @@ import * as testData from '../../utils/testData'
 test.describe('Tests for registering new users - different approaches', () => {
 
     let signupPage: SignupPage;
+    
 
     test.beforeEach(async ({ page }) => {
         signupPage = new SignupPage(page);
@@ -17,13 +18,13 @@ test.describe('Tests for registering new users - different approaches', () => {
     });
 
 
-    test.skip("Register new user from specific country using generated Faker information", async ({page}) => {
+    test("Register new user from specific country using generated Faker information", async ({page}) => {
 
         const userData = testData.generateRandomUser();
 
         //enter and submit random Name and email 
         await signupPage.enterName(userData.firstName);
-        await signupPage.enterEmail(userData.email);
+        await signupPage.enterFakerEmail(userData.email);
         await signupPage.signupButton.click();
         await expect(signupPage.signupForm).toBeVisible();
 
@@ -57,7 +58,7 @@ test.describe('Tests for registering new users - different approaches', () => {
 
     });
 
-    test("Register new users from India", async ({page}) => {
+    test.only("Register new users from India", async ({page}) => {
         await signupPage.registerUserFromCountry(testData.IndiaUser)
     });
 

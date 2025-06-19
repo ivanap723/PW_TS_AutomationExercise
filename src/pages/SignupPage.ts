@@ -1,7 +1,7 @@
-import { expect, type Locator, type Page } from '@playwright/test';
+import { defineConfig, expect, type Locator, type Page } from '@playwright/test';
 import { loginPath } from '../utils/constants';
 import * as testData from '../utils/testData';
-import * as constants from '../utils/constants'
+import * as constants from '../utils/constants';
 
 export class SignupPage {
 //login page
@@ -39,6 +39,10 @@ readonly submitButton: Locator;
 readonly accountCreated: Locator;
 readonly continueButton: Locator;
 readonly categoryHeading: Locator;
+readonly loggedInAs: Locator;
+//deleting account
+readonly deleteAccount: Locator;
+readonly accountDeleted: Locator;
 
 
 constructor(page: Page) {
@@ -73,6 +77,10 @@ constructor(page: Page) {
     this.accountCreated = page.getByRole('heading', { name: 'Account Created!' });
     this.continueButton = page.getByRole('link', { name: 'Continue'});
     this.categoryHeading = page.getByRole('heading', { name: 'Category' });
+    this.loggedInAs = page.locator('text=Logged in as ');
+    this.deleteAccount = page.locator('text=Delete Account');
+    this.accountDeleted = page.getByRole('heading', { name: 'Account Deleted!' });
+    
   }
 
   async goToLoginPage(){
@@ -82,8 +90,12 @@ constructor(page: Page) {
   async enterName(name: string){
     await this.signupName.fill(name);
   }
+  
+  async enterRandomEmail(){
+    await this.signupEmail.fill(testData.generateRandomEmail());
+  }
 
-  async enterEmail(email: string){
+  async enterFakerEmail(email: string){
     await this.signupEmail.fill(email);
   }
 
@@ -132,14 +144,14 @@ constructor(page: Page) {
       //enter and submit random Name and email
          
         await this.enterName(user.firstName);
-        await this.enterEmail(constants.userEmail);
+        await this.enterRandomEmail();
         await this.signupButton.click();
         await expect(this.signupForm).toBeVisible();
 
         //enter account information section
         await this.pickRandomGender();
         await this.checkNameField(user.firstName); 
-        await this.checkEmailField(constants.userEmail);
+        await this.checkEmailField(testData.getGeneratedEmail());
         await this.password.fill(constants.userPassword)
         
         await this.setRandomBirhday(); 
@@ -163,5 +175,13 @@ constructor(page: Page) {
         await expect(this.accountCreated).toBeVisible();
         await this.continueButton.click();
         await expect(this.categoryHeading).toBeVisible();
+        await expect(this.page.locator(`text=Logged in as ${user.firstName}`)).toBeVisible();
+
+        //delete account
+        await this.deleteAccount.click();
+        await expect(this.accountDeleted).toBeVisible();
+        await this.continueButton.click();
+        await expect(this.page).toHaveURL("https://www.automationexercise.com/");
+
   }
 }
