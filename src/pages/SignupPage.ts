@@ -1,4 +1,4 @@
-import { defineConfig, expect, type Locator, type Page } from '@playwright/test';
+import { expect, type Locator, type Page } from '@playwright/test';
 import { loginPath } from '../utils/constants';
 import * as testData from '../utils/testData';
 import * as constants from '../utils/constants';
@@ -20,7 +20,6 @@ readonly password: Locator;
 readonly birthDays: Locator;
 readonly birthMonths: Locator;
 readonly birthYears: Locator;
-readonly consentButton: Locator;
 readonly checkboxNewsletter: Locator;
 readonly checkboxSpecialOffers: Locator;
 //signup page - address information
@@ -60,7 +59,6 @@ constructor(page: Page) {
     this.birthDays = page.locator('#days');
     this.birthMonths = page.locator('#months');
     this.birthYears = page.locator('#years');
-    this.consentButton = page.getByRole('button', { name: 'Consent' });
     this.checkboxNewsletter = page.locator('#newsletter');
     this.checkboxSpecialOffers = page.locator('#optin');
     this.firstName = page.locator('#first_name');

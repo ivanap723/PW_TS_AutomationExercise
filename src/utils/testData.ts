@@ -93,7 +93,7 @@ export const USAUser: User = {
     city: 'Albuquerque',
     zip: 'NM 87104',
     phone: '312111222333',
-    country: 'USA'
+    country: 'United States'
 }
 
 export const CanadaUser: User = {
@@ -145,7 +145,7 @@ export const NewZealandUser: User = {
     city: 'Wellington',
     zip: '6011',
     phone: '344111222333',
-    country: 'NewZealand'
+    country: 'New Zealand'
 }
 
 export const SingaporeUser: User = {

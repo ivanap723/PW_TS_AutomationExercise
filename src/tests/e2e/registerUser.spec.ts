@@ -1,19 +1,21 @@
 import { test, expect, type Page } from '@playwright/test'
 import { SignupPage } from '../../pages/SignupPage'
 import * as testData from '../../utils/testData'
+import { CookiesPopUp } from '../../pages/CookiesPopUp';
+import { loginPath } from '../../utils/constants';
 
 test.describe('Tests for registering new users - different approaches', () => {
 
     let signupPage: SignupPage;
-    
+    let cookiesPopUp: CookiesPopUp;
 
     test.beforeEach(async ({ page }) => {
         signupPage = new SignupPage(page);
-        
-    
-        await signupPage.goToLoginPage();
+        cookiesPopUp = new CookiesPopUp(page);
+
+        await page.goto(loginPath);
         await expect(signupPage.signupButton).toBeVisible();
-        await signupPage.consentButton.click();
+        await cookiesPopUp.clickConsent();
     
     });
 
@@ -58,7 +60,7 @@ test.describe('Tests for registering new users - different approaches', () => {
 
     });
 
-    test.only("Register new users from India", async ({page}) => {
+    test("Register new users from India", async ({page}) => {
         await signupPage.registerUserFromCountry(testData.IndiaUser)
     });
 
