@@ -35,7 +35,7 @@ test.describe('Tests for login with wrong and correct credentials', () => {
         await expect(page.locator('text=Your email or password is incorrect!')).toBeVisible();
     });
 
-    test.only("Try logging in with correct credentials", async ({page}) => {
+    test("Try logging in with correct credentials and then log out", async ({page}) => {
            
         await loginPage.enterEmail(constants.userEmail)
         await loginPage.enterPassword(constants.userPassword)

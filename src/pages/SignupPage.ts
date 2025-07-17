@@ -10,6 +10,7 @@ readonly signupButton: Locator;
 readonly signupHeading: Locator;
 readonly signupName: Locator;
 readonly signupEmail: Locator;
+readonly existingEmailError: Locator;
 //signup page - enter account info
 readonly signupForm: Locator;
 readonly optionMrs: Locator;
@@ -78,6 +79,7 @@ constructor(page: Page) {
     this.loggedInAs = page.locator('text=Logged in as ');
     this.deleteAccount = page.locator('text=Delete Account');
     this.accountDeleted = page.getByRole('heading', { name: 'Account Deleted!' });
+    this.existingEmailError = page.locator('text=Email Address already exist!');
     
   }
 

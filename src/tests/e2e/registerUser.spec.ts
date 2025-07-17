@@ -3,6 +3,8 @@ import { SignupPage } from '../../pages/SignupPage'
 import * as testData from '../../utils/testData'
 import { CookiesPopUp } from '../../pages/CookiesPopUp';
 import { loginPath } from '../../utils/constants';
+import * as constants from '../../utils/constants';
+
 
 test.describe('Tests for registering new users - different approaches', () => {
 
@@ -86,6 +88,14 @@ test.describe('Tests for registering new users - different approaches', () => {
 
     test("Register new users from Singapore", async ({page}) => {
     await signupPage.registerUserFromCountry(testData.SingaporeUser)
+    });
+
+    test("Try to register with existing user", async ({page}) => {
+    await signupPage.enterName(constants.username);
+    await signupPage.signupEmail.fill(constants.userEmail);
+    await signupPage.signupButton.click();
+    await expect(signupPage.existingEmailError).toBeVisible();
+
     });
 });
 
