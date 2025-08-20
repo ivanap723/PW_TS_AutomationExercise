@@ -1,10 +1,11 @@
 import { test, expect } from '@playwright/test'
 
-test("Visit AutomationExercise homepage", async ({page}) => {
+test("Visit AutomationExercise homepage", async ({page}) => 
+{
 
-    await page.goto('https://www.automationexercise.com/')
-    const image = page.locator('img[alt="Website for automation practice"]');
-    await expect(image).toBeVisible();
+	await page.goto('https://www.automationexercise.com/')
+	const image = page.locator('img[alt="Website for automation practice"]');
+	await expect(image).toBeVisible();
 
 })
 

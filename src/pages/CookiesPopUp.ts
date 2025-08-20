@@ -1,17 +1,20 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 
-export class CookiesPopUp {
+export class CookiesPopUp 
+{
 
-    readonly page: Page;
+	readonly page: Page;
 
-    constructor(page: Page) {
-        this.page = page;
+	constructor(page: Page) 
+	{
+		this.page = page;
 
-    }
+	}
 
-    async clickConsent(){
+	async clickConsent()
+	{
 
-    await this.page.getByRole('button', { name: 'Consent' }).click();
+		await this.page.getByRole('button', { name: 'Consent' }).click();
 
-}
+	}
 }
