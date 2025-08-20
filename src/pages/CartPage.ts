@@ -6,11 +6,12 @@ export class CartPage {
 readonly page: Page; 
 readonly cartMenu: Locator;
 readonly products: Locator;
-readonly productName: Locator;
-readonly productCategory: Locator;
-readonly productPrice: Locator;
-readonly productQuantity: Locator;
-readonly productTotal: Locator;
+readonly cartLink: Locator;
+readonly proceedToCheckout: Locator;
+readonly removeProduct: Locator;
+readonly emptyCartMsg: Locator;
+readonly clickHereToBuy: Locator;
+
 
 
 constructor(page: Page) {
@@ -18,6 +19,11 @@ constructor(page: Page) {
     this.page = page;
     this.cartMenu = page.locator('tr.cart_menu');
     this.products = page.locator('tbody tr[id^="product-"]');
+    this.cartLink = page.getByRole('link', { name: 'Cart' });
+    this.proceedToCheckout = page.locator('a.btn.check_out');
+    this.removeProduct = page.locator('.cart_quantity_delete');
+    this.emptyCartMsg = page.locator('p.text-center');
+    this.clickHereToBuy = page.getByRole('link', { name: 'here'});
 
 }
 
@@ -50,6 +56,19 @@ async verifyCartProducts(page: Page) {
     await expect(row.locator('.cart_quantity button')).not.toHaveText('');
     await expect(row.locator('.cart_total_price')).not.toHaveText('');
   }
+
+}
+
+async removeAllCartProducts(page: Page) {
+
+  const count = await this.products.count();
+  console.log(`Total products in cart: ${count}`);
+  for (let i = 0; i < count; i++) {
+    const row = this.products.nth(i);
+    await this.removeProduct.nth(i).click();
+}
+
+  await expect(this.emptyCartMsg).toHaveText('Cart is empty! Click here to buy products.');
 
 }
 }
