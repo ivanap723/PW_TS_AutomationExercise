@@ -33,7 +33,7 @@ test.describe('Tests for verifying Cart Page', () =>
 	test("Add two products to the Cart and verify everything is visible in Cart page", async ({page}) => 
 	{
                
-		await page.locator('.add-to-cart').first().click();
+		await page.locator('.add-to-cart').first().click(); //create a method for adding multiple items to Cart (also multiple quantity)
 		await productsPage.continueShoppingButton.click();
 		await page.locator('.add-to-cart').nth(2).click();
 		await productsPage.viewCartLink.click();
@@ -55,7 +55,7 @@ test.describe('Tests for verifying Cart Page', () =>
 
 	});
 
-	test.only("Remove products from the cart", async ({page}) => 
+	test("Remove products from the cart", async ({page}) => 
 	{
                
 		await cartPage.cartLink.click();

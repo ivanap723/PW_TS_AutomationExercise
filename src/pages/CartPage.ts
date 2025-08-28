@@ -37,7 +37,7 @@ export class CartPage
 		console.log(`Total products in cart: ${count}`);
 
 		for (let i = 0; i < count; i++) 
-      {
+		{
 			const row = this.products.nth(i);
 
 			const name = await row.locator('.cart_description h4 a').textContent();

@@ -31,7 +31,7 @@ export class ProductsPage
 
 
 	constructor(page: Page) 
-    {
+	{
 
 		this.page = page;
 		this.productsLink = page.getByRole('link', { name: 'Products' });
