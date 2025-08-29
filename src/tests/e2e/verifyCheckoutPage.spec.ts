@@ -35,10 +35,11 @@ test.describe('Tests for verifying Checkout Page', () =>
 		await productsPage.continueShoppingButton.click();
 		await page.locator('.add-to-cart').nth(2).click();
 		await productsPage.viewCartLink.click(); 
+		await cartPage.proceedToCheckout.click();
     
 	});
 
-	test.only("Verify Checkout page elements are visible", async ({page}) => 
+	test("Verify Checkout page elements are visible", async ({page}) => 
 	{
 		await checkoutPage.verifyAddressVisible(page);
 
@@ -50,6 +51,23 @@ test.describe('Tests for verifying Checkout Page', () =>
 		await expect(checkoutPage.total).toBeVisible;
 
 		await checkoutPage.verifyItemsInTable(page);
+
+	});
+
+	test.only("Verify total price is calculated correctly", async ({page}) => 
+	{
+
+		await checkoutPage.calculateTotalPrice(page);
+
+	});
+
+	test("Verify adding a comment works", async ({page}) => 
+	{
+		await expect(checkoutPage.orderMsg).toHaveText('If you would like to add a comment about your order, please write it in the field below.');
+		await checkoutPage.textArea.fill('Pack it in wrapping paper, please');
+		await page.waitForTimeout(3000);
+		await expect(page).toHaveURL('https://www.automationexercise.com/payment');
+
 
 	});
 

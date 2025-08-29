@@ -28,6 +28,11 @@ export class CheckoutPage
 
 
 	//order comment
+	readonly orderMsg: Locator;
+	readonly textArea: Locator;
+
+	//button
+	placeOrder: Locator;
 
 
 
@@ -48,14 +53,14 @@ export class CheckoutPage
 
 		//order table
 		this.reviewOrderHeading = page.getByRole('heading', { name: 'Review Your Order' });
-		this.item = page.locator('td.image');
-		this.description = page.locator('td.description');
-		this.price = page.locator('td.price');
-		this.quantity = page.locator('td.quantity');
-		this.total = page.locator('td.total');
 		this.cartItem = page.locator('tbody tr[id^="product-"]');
 
 		//order comment
+		this.orderMsg = page.locator('#ordermsg label');
+		this.textArea = page.locator('textarea[name="message"]');
+
+		//button
+		this.placeOrder = page.getByRole('link', { name: 'Place Order' });
 
 	}
 
@@ -91,5 +96,41 @@ export class CheckoutPage
 			await expect(row.locator('td.cart_total p')).toBeVisible();
 		}
     
+	}
+
+	async calculateTotalPrice(page: Page) {
+		const count = await this.cartItem.count();
+		let totalAmount = 0; // accumulator outside loop
+
+		for (let i = 0; i < count; i++) {
+			const row = this.cartItem.nth(i);
+
+			// Quantity
+			const quantityText = await row.locator('td.cart_quantity button').innerText();
+			const quantity = parseInt(quantityText, 10);
+
+			// Price
+			const priceText = await row.locator('td.cart_price p').innerText();
+			const price = parseInt(priceText.replace(/[^\d]/g, ''), 10);
+
+			// Expected total
+			const expectedTotal = quantity * price;
+
+			// UI total
+			const itemTotalText = await row.locator('td.cart_total p.cart_total_price').innerText();
+			const uiTotal = parseInt(itemTotalText.replace(/[^\d]/g, ''), 10);
+
+			// Assert row total matches calculation
+			expect(uiTotal).toBe(expectedTotal);
+
+			// Add to grand total
+			totalAmount += expectedTotal;
+		}
+
+		// ✅ Now check the grand total in UI (example selector)
+		const grandTotalText = await page.locator('#total_price').innerText(); 
+		const grandTotal = parseInt(grandTotalText.replace(/[^\d]/g, ''), 10);
+
+		expect(grandTotal).toBe(totalAmount);
 	}
 }
