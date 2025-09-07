@@ -1,5 +1,6 @@
 import { expect, type Locator, type Page } from '@playwright/test';
-
+import { loginPath } from '../utils/constants';
+import { CookiesPopUp } from './CookiesPopUp';
 
 
 export class LoginPage 
@@ -20,14 +21,26 @@ export class LoginPage
 
 	}
 
-	async enterEmail(email: string)
+
+
+	async visitLoginPage()
 	{
-		await this.emailField.fill(email);
+		let cookiesPopUp: CookiesPopUp;
+		cookiesPopUp = new CookiesPopUp(this.page);
+
+		await this.page.goto(loginPath);
+		await expect(this.loginButton).toBeVisible();
+		await cookiesPopUp.clickConsent();
+
 	}
-     
-	async enterPassword(pass: string)
+
+	async performLogin(loginUser)
 	{
-		await this.passwordField.fill(pass);
+		await this.emailField.fill(loginUser.email);
+		await this.passwordField.fill(loginUser.password);
+		await this.loginButton.click();
+
 	}
+
 
 }

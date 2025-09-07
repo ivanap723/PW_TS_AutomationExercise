@@ -107,7 +107,7 @@ export class SignupPage
 
 	async pickRandomGender()
 	{
-		const genderOptions = [this.optionMr, this.optionMrs]
+		const genderOptions = [this.optionMr, this.optionMrs];
 		const randomIndex = Math.floor(Math.random() * genderOptions.length);
 		await genderOptions[randomIndex].click();
 	}
@@ -115,13 +115,13 @@ export class SignupPage
 	async checkNameField(name: string)
 	{
 		const value = await this.nameField.inputValue();
-		expect(value).toEqual(name)
+		expect(value).toEqual(name);
 	}
 
 	async checkEmailField(email: string)
 	{
 		const value = await this.emailField.inputValue();
-		expect(value).toEqual(email)
+		expect(value).toEqual(email);
 	}
 
 	async setRandomBirhday()
@@ -147,7 +147,7 @@ export class SignupPage
 
 	async selectCountry(country: string)
 	{
-		this.country.selectOption(country)
+		this.country.selectOption(country);
     
 	}
 
@@ -165,11 +165,11 @@ export class SignupPage
 		await this.pickRandomGender();
 		await this.checkNameField(user.firstName); 
 		await this.checkEmailField(testData.getGeneratedEmail());
-		await this.password.fill(constants.userPassword)
+		await this.password.fill(existingUser.password);
         
 		await this.setRandomBirhday(); 
-		await this.clickCheckbox(this.checkboxNewsletter)
-		await this.clickCheckbox(this.checkboxSpecialOffers)
+		await this.clickCheckbox(this.checkboxNewsletter);
+		await this.clickCheckbox(this.checkboxSpecialOffers);
 
 		//address information section
 		await this.firstName.fill(user.firstName);

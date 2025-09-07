@@ -13,7 +13,7 @@ test.describe('Tests for verifying Products page and Product details', () =>
 		productsPage = new ProductsPage(page);
 		cookiesPopUp = new CookiesPopUp(page);
 
-		await page.goto('/'); //visits home page
+		await page.goto('/'); //create method for visiting product page
 		await cookiesPopUp.clickConsent();
 		await productsPage.productsLink.click();
 		await expect(page).toHaveURL('https://www.automationexercise.com/products');

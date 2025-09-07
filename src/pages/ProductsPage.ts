@@ -55,5 +55,21 @@ export class ProductsPage
 
 	}
 
+	async addProductToCart(ordinalNum, proceed?)
+	{
+
+		await this.page.locator('.add-to-cart').nth(ordinalNum).click();
+
+		if(proceed)
+		{
+			await this.continueShoppingButton.click();
+		}
+		else 
+		{
+			await this.viewCartLink.click();
+		}
+		
+
+	}
 
 }

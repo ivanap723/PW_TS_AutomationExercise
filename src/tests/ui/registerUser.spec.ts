@@ -3,7 +3,6 @@ import { SignupPage } from '../../pages/SignupPage';
 import * as testData from '../../utils/testData';
 import { CookiesPopUp } from '../../pages/CookiesPopUp';
 import { loginPath } from '../../utils/constants';
-import * as constants from '../../utils/constants';
 
 
 test.describe('Tests for registering new users - different approaches', () => 
@@ -65,45 +64,45 @@ test.describe('Tests for registering new users - different approaches', () =>
 
 	});
 
-	test("Register new users from India", async ({page}) => 
+	test("Register new users from India", async () => 
 	{
 		await signupPage.registerUserFromCountry(testData.IndiaUser);
 	});
 
-	test("Register new users from USA", async ({page}) => 
+	test("Register new users from USA", async () => 
 	{
 		await signupPage.registerUserFromCountry(testData.USAUser);
 	});
 
-	test("Register new users from Canada", async ({page}) => 
+	test("Register new users from Canada", async () => 
 	{
 		await signupPage.registerUserFromCountry(testData.CanadaUser);
 	});
 
-	test("Register new users from Australia", async ({page}) => 
+	test("Register new users from Australia", async () => 
 	{
 		await signupPage.registerUserFromCountry(testData.AustraliaUser);
 	});
 
-	test("Register new users from Israel", async ({page}) => 
+	test("Register new users from Israel", async () => 
 	{
 		await signupPage.registerUserFromCountry(testData.IsraelUser);
 	});
 
-	test("Register new users from New Zealand", async ({page}) => 
+	test("Register new users from New Zealand", async () => 
 	{
 		await signupPage.registerUserFromCountry(testData.NewZealandUser);
 	});
 
-	test("Register new users from Singapore", async ({page}) => 
+	test("Register new users from Singapore", async () => 
 	{
 		await signupPage.registerUserFromCountry(testData.SingaporeUser);
 	});
 
-	test("Try to register with existing user", async ({page}) => 
+	test("Try to register with existing user", async () => 
 	{
-		await signupPage.enterName(constants.username);
-		await signupPage.signupEmail.fill(constants.userEmail);
+		await signupPage.enterName(testData.existingUser.email);
+		await signupPage.signupEmail.fill(testData.existingUser.password);
 		await signupPage.signupButton.click();
 		await expect(signupPage.existingEmailError).toBeVisible();
 

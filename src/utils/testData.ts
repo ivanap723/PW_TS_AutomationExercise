@@ -57,7 +57,7 @@ export function getGeneratedEmail()
 	return generatedEmail;
 }
 
-//-------------------------------User Data----------------------------------------
+//-------------------------------User Data for registration----------------------------------------
 
 export interface User {
     firstName: string,
@@ -83,7 +83,7 @@ export const IndiaUser: User = {
 	zip: '400026',
 	phone: '206111222333',
 	country: 'India'
-}
+};
 
 export const USAUser: User = {
 	firstName: 'Peter',
@@ -96,7 +96,7 @@ export const USAUser: User = {
 	zip: 'NM 87104',
 	phone: '312111222333',
 	country: 'United States'
-}
+};
 
 export const CanadaUser: User = {
 	firstName: 'John',
@@ -109,7 +109,7 @@ export const CanadaUser: User = {
 	zip: 'BC V6A 3Z7',
 	phone: '204111222333',
 	country: 'Canada'
-}
+};
 
 export const AustraliaUser: User = {
 	firstName: 'Samantha',
@@ -122,7 +122,7 @@ export const AustraliaUser: User = {
 	zip: 'NSW 2010',
 	phone: '342111222333',
 	country: 'Australia'
-}
+};
 
 export const IsraelUser: User = {
 	firstName: 'Ariel',
@@ -135,7 +135,7 @@ export const IsraelUser: User = {
 	zip: '6329302',
 	phone: '312111222333',
 	country: 'Israel'
-}
+};
 
 export const NewZealandUser: User = {
 	firstName: 'Tepapa',
@@ -148,7 +148,7 @@ export const NewZealandUser: User = {
 	zip: '6011',
 	phone: '344111222333',
 	country: 'New Zealand'
-}
+};
 
 export const SingaporeUser: User = {
 	firstName: 'Singy',
@@ -161,4 +161,31 @@ export const SingaporeUser: User = {
 	zip: '248837',
 	phone: '344111222333',
 	country: 'Singapore'
+};
+
+//--------------------------user data for logging in----------------------------
+
+export interface CredentialPair
+{
+	email: string;
+	password: string;
+
 }
+
+export const  existingUser: CredentialPair =
+{
+	email: 'test_user123@test.com',
+	password: 'Cheescake123.'
+};
+
+export const  inexistingUser: CredentialPair =
+{
+	email: 'wrong@email.com',
+	password: 'WrongPass123.'
+};
+
+export const existingUserWrongPass: CredentialPair =
+{
+	email: 'test_user123@test.com',
+	password: 'WrongPass123.'
+};

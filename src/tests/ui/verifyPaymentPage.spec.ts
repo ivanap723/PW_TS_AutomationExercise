@@ -3,10 +3,9 @@ import { PaymentPage } from '../../pages/PaymentPage';
 import { CartPage } from '../../pages/CartPage';
 import { ProductsPage } from '../../pages/ProductsPage';
 import { LoginPage } from '../../pages/LoginPage';
-import { loginPath } from '../../utils/constants';
-import { CookiesPopUp } from '../../pages/CookiesPopUp';
 import * as constants from '../../utils/constants';
 import { CheckoutPage } from '../../pages/CheckoutPage';
+import { existingUser } from '../../utils/testData';
 
 test.describe('Tests for verifying Payment Page', () => 
 {
@@ -16,7 +15,7 @@ test.describe('Tests for verifying Payment Page', () =>
 	let loginPage: LoginPage;
 	let cartPage: CartPage;
 	let productsPage: ProductsPage;
-	let cookiesPopUp: CookiesPopUp;
+
 
 	test.beforeEach(async ({ page }) => 
 	{
@@ -25,19 +24,12 @@ test.describe('Tests for verifying Payment Page', () =>
 		checkoutPage = new CheckoutPage(page);
 		cartPage = new CartPage(page);
 		loginPage = new LoginPage(page);
-		cookiesPopUp = new CookiesPopUp(page);
 
-		await page.goto(loginPath); //whole process to get to the payment page
-		await cookiesPopUp.clickConsent();
- 
-		await loginPage.enterEmail(constants.userEmail); //replace with login method
-		await loginPage.enterPassword(constants.userPassword);
-		await loginPage.loginButton.click();
+		await loginPage.visitLoginPage();
+		await loginPage.performLogin(existingUser);
 
-		await page.locator('.add-to-cart').first().click(); //create a method for adding multiple items to Cart
-		await productsPage.continueShoppingButton.click();
-		await page.locator('.add-to-cart').nth(2).click();
-		await productsPage.viewCartLink.click(); //create method for getting to cart page
+		await productsPage.addProductToCart(constants.secondProduct, true);
+		await productsPage.addProductToCart(constants.fourthProduct, false);
 		await cartPage.proceedToCheckout.click(); // create method for proceeding to checkout
 		await checkoutPage.placeOrder.click(); // create method for placing the order
     

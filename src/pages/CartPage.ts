@@ -30,7 +30,7 @@ export class CartPage
 	}
 
 
-	async verifyCartProducts(page: Page) 
+	async verifyCartProducts() 
 	{
 
 		const count = await this.products.count();
@@ -63,7 +63,7 @@ export class CartPage
 
 	}
 
-	async removeAllCartProducts(page: Page) 
+	async removeAllCartProducts() 
 	{
 
 		const count = await this.products.count();
