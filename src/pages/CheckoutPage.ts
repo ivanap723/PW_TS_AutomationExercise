@@ -32,7 +32,7 @@ export class CheckoutPage
 	readonly textArea: Locator;
 
 	//button
-	placeOrder: Locator;
+	readonly placeOrder: Locator;
 
 
 
@@ -98,11 +98,13 @@ export class CheckoutPage
     
 	}
 
-	async calculateTotalPrice(page: Page) {
+	async calculateTotalPrice(page: Page) 
+	{
 		const count = await this.cartItem.count();
 		let totalAmount = 0; // accumulator outside loop
 
-		for (let i = 0; i < count; i++) {
+		for (let i = 0; i < count; i++) 
+		{
 			const row = this.cartItem.nth(i);
 
 			// Quantity
@@ -128,7 +130,9 @@ export class CheckoutPage
 		}
 
 		// ✅ Now check the grand total in UI (example selector)
-		const grandTotalText = await page.locator('#total_price').innerText(); 
+		const grandTotalText = await page.locator('tr', { hasText: 'Total Amount' })
+			.locator('.cart_total_price')
+			.innerText(); 
 		const grandTotal = parseInt(grandTotalText.replace(/[^\d]/g, ''), 10);
 
 		expect(grandTotal).toBe(totalAmount);
