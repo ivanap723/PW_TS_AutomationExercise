@@ -90,9 +90,12 @@ export class SignupPage
 		await this.page.goto(loginPath);
 	}
 
-	async enterName(name: string)
+	async enterName(name?: string)
 	{
-		await this.signupName.fill(name);
+		if(name)
+		{
+			await this.signupName.fill(name);
+		}
 	}
   
 	async enterRandomEmail()
@@ -165,7 +168,7 @@ export class SignupPage
 		await this.pickRandomGender();
 		await this.checkNameField(user.firstName); 
 		await this.checkEmailField(testData.getGeneratedEmail());
-		await this.password.fill(existingUser.password);
+		await this.password.fill(testData.existingUser.password);
         
 		await this.setRandomBirhday(); 
 		await this.clickCheckbox(this.checkboxNewsletter);

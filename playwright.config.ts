@@ -8,7 +8,7 @@ export default defineConfig({
 	use: {
 		trace: "on",
 		baseURL: 'https://www.automationexercise.com/',
-		viewport: { width: 1280, height: 720 }
+		viewport: { width: 2560, height: 1440 }
 	},
 
 });

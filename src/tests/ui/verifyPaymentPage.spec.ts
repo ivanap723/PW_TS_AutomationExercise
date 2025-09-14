@@ -30,12 +30,12 @@ test.describe('Tests for verifying Payment Page', () =>
 
 		await productsPage.addProductToCart(constants.secondProduct, true);
 		await productsPage.addProductToCart(constants.fourthProduct, false);
-		await cartPage.proceedToCheckout.click(); // create method for proceeding to checkout
-		await checkoutPage.placeOrder.click(); // create method for placing the order
+		await cartPage.proceedToCheckout.click(); 
+		await checkoutPage.placeOrder.click();
     
 	});
 
-	test("Verify field names are visible", async ({page}) => 
+	test("Verify field names are visible", async () => 
 	{
 		await expect(paymentPage.NameOnCard).toHaveText('Name on Card');
 		await expect(paymentPage.cardNumber).toHaveText('Card Number');
@@ -45,7 +45,7 @@ test.describe('Tests for verifying Payment Page', () =>
 	});
 
 
-	test.only("Enter billing info and pay and confirm order", async ({page, baseURL}) => 
+	test("Enter billing info and pay and confirm order", async ({page, baseURL}) => 
 	{
 		await paymentPage.NameField.fill(constants.CreditCardName);
 		await paymentPage.CCNumberField.fill(constants.CreditCardNumber);

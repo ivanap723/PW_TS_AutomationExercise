@@ -4,6 +4,7 @@ import { CartPage } from '../../pages/CartPage';
 import { LoginPage } from '../../pages/LoginPage';
 import { existingUser } from '../../utils/testData';
 import * as constants from '../../utils/constants';
+import { base } from '@faker-js/faker';
 
 
 test.describe('Tests for verifying Cart Page', () => 
@@ -25,37 +26,37 @@ test.describe('Tests for verifying Cart Page', () =>
     
 	});
 
-	test("Add two products to the Cart and verify everything is visible in Cart page", async ({page}) => 
+	test("Add two products to the Cart and verify everything is visible in Cart page", async ({page, baseURL}) => 
 	{
                
 		await productsPage.addProductToCart(constants.secondProduct, true);
 		await productsPage.addProductToCart(constants.thirdProduct, false);
 
-		await expect(page).toHaveURL('https://www.automationexercise.com/view_cart');
+		await expect(page).toHaveURL(baseURL + constants.viewCartPath);
 		await expect(cartPage.cartMenu).toBeVisible();
 		await cartPage.verifyCartProducts();
 
 	});
 
 
-	test("Click proceed to checkout and verify you landed on checkout page", async ({page}) => 
+	test("Click proceed to checkout and verify you landed on checkout page", async ({page, baseURL}) => 
 	{
                
 		await cartPage.cartLink.click();
-		await expect(page).toHaveURL('https://www.automationexercise.com/view_cart');
+		await expect(page).toHaveURL(baseURL + constants.viewCartPath);
 		await cartPage.proceedToCheckout.click();
-		await expect(page).toHaveURL('https://www.automationexercise.com/checkout');
+		await expect(page).toHaveURL(baseURL + constants.checkoutPath);
 
 	});
 
-	test("Remove products from the cart", async ({page}) => 
+	test("Remove products from the cart", async ({page, baseURL}) => 
 	{
                
 		await cartPage.cartLink.click();
-		await expect(page).toHaveURL('https://www.automationexercise.com/view_cart');
+		await expect(page).toHaveURL(baseURL + constants.viewCartPath);
 		await cartPage.removeAllCartProducts();
 		await cartPage.clickHereToBuy.click();
-		await expect(page).toHaveURL('https://www.automationexercise.com/products');
+		await expect(page).toHaveURL(baseURL + constants.productsPath);
 
 	});    
 });

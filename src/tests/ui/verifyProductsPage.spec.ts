@@ -1,6 +1,7 @@
 import { test, expect, type Page } from '@playwright/test';
 import { ProductsPage } from '../../pages/ProductsPage';
 import { CookiesPopUp } from '../../pages/CookiesPopUp';
+import * as constants from '../../utils/constants';
 
 test.describe('Tests for verifying Products page and Product details', () => 
 {
@@ -8,15 +9,15 @@ test.describe('Tests for verifying Products page and Product details', () =>
 	let productsPage: ProductsPage;
 	let cookiesPopUp: CookiesPopUp;
 
-	test.beforeEach(async ({ page }) => 
+	test.beforeEach(async ({ page, baseURL }) => 
 	{
 		productsPage = new ProductsPage(page);
 		cookiesPopUp = new CookiesPopUp(page);
 
-		await page.goto('/'); //create method for visiting product page
+		await page.goto('/'); 
 		await cookiesPopUp.clickConsent();
 		await productsPage.productsLink.click();
-		await expect(page).toHaveURL('https://www.automationexercise.com/products');
+		await expect(page).toHaveURL(baseURL + constants.productsPath);
 		await expect(productsPage.productsTitle).toBeVisible();
     
 	});
@@ -32,7 +33,7 @@ test.describe('Tests for verifying Products page and Product details', () =>
 		}
 	});
 
-	test("Verify Single Product details are visible", async ({page}) => 
+	test("Verify First Product details are visible", async ({page, baseURL}) => 
 	{
         
 		await productsPage.productView.click();
@@ -40,11 +41,11 @@ test.describe('Tests for verifying Products page and Product details', () =>
 		await expect(productsPage.productPrice).toBeVisible();
 		await expect(productsPage.productQuantity).toBeVisible();
 		await expect(productsPage.addToCartButton).toBeVisible();
-		await expect(page).toHaveURL('https://www.automationexercise.com/product_details/1');
+		await expect(page).toHaveURL(baseURL + constants.productDetailsPath + '/1');
 
 	});
 
-	test("Search for a product", async ({page}) => 
+	test("Search for a product", async () => 
 	{
                
 		await expect(productsPage.searchBar).toBeVisible();
@@ -55,7 +56,7 @@ test.describe('Tests for verifying Products page and Product details', () =>
 
 	});
 
-	test.only("Add single product to the cart and verify cart modal appeared", async ({page}) => 
+	test("Add single product to the cart and verify cart modal appeared", async ({page}) => 
 	{
                
 		await page.locator('.add-to-cart').first().click();

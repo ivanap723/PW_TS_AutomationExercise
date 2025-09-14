@@ -1,7 +1,12 @@
 
 
 //Login info
-export const loginPath = '/login';
+export const loginPath = 'login';
+export const productsPath = 'products';
+export const productDetailsPath = 'product_details';
+export const viewCartPath = 'view_cart';
+export const checkoutPath = 'checkout';
+export const paymentPath = 'payment';
 
 //Billing info
 export const CreditCardName = 'Peter Peterson';

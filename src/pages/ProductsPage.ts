@@ -1,4 +1,5 @@
 import { expect, type Locator, type Page } from '@playwright/test';
+import { time } from 'console';
 
 export class ProductsPage 
 {
@@ -25,7 +26,6 @@ export class ProductsPage
 	readonly productName: Locator;
 	readonly productPrice: Locator;
 	readonly productQuantity: Locator;
-	readonly addToCartButton: Locator;
 
 
 
@@ -42,14 +42,13 @@ export class ProductsPage
 		this.productName = this.productInfo.locator('h2');
 		this.productPrice = this.productInfo.locator('span span');
 		this.productQuantity = this.productInfo.locator('label');
-		this.addToCartButton = page.getByRole('button', { name: 'Add to cart' });
 		this.searchBar = page.locator('#search_product');
 		this.submitSearch = page.locator('#submit_search');
 		this.productNameOverlay = page.locator('.overlay-content p');
 		this.addToCartOverlay = page.locator('.add-to-cart');
 		this.addedModal = page.locator('h4.modal-title.w-100');
 		this.addedModalText = (page.locator('p.text-center', { hasText: 'added to cart' }));
-		this.viewCartLink = page.locator('p.text-center a', { hasText: 'View Cart' });
+		this.viewCartLink = page.locator('a', { hasText: 'View Cart' });
 		this.continueShoppingButton = page.getByRole('button', { name: 'Continue Shopping' });
 
 
@@ -57,8 +56,13 @@ export class ProductsPage
 
 	async addProductToCart(ordinalNum, proceed?)
 	{
+		const productContainer = this.page.locator('.product-image-wrapper').nth(ordinalNum);
+		await productContainer.hover();
+		await this.page.waitForTimeout(2000);
 
-		await this.page.locator('.add-to-cart').nth(ordinalNum).click();
+		const addToCartButton = productContainer.locator('.product-overlay .add-to-cart');
+  		await addToCartButton.waitFor({ state: 'visible', timeout: 5000 });
+		await addToCartButton.click({ force: true });
 
 		if(proceed)
 		{
@@ -69,7 +73,5 @@ export class ProductsPage
 			await this.viewCartLink.click();
 		}
 		
-
 	}
-
 }

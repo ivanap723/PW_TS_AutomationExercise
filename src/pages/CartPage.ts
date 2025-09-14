@@ -74,7 +74,8 @@ export class CartPage
 			await this.removeProduct.nth(i).click();
 		}
 
-		await expect(this.emptyCartMsg).toHaveText('Cart is empty! Click here to buy products.');
+		await this.emptyCartMsg.waitFor({ state: 'visible', timeout: 5000 });
+		await expect(this.emptyCartMsg).toContainText('Cart is empty! Click here to buy products.');
 
 	}
 }

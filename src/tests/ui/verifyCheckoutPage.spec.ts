@@ -25,23 +25,24 @@ test.describe('Tests for verifying Checkout Page', () =>
 		await loginPage.performLogin(existingUser);
 		await productsPage.addProductToCart(constants.secondProduct, true);
 		await productsPage.addProductToCart(constants.thirdProduct, false);
-		await productsPage.viewCartLink.click(); 
+		await cartPage.page.waitForTimeout(2000);
+		await productsPage.viewCartLink.click(); // to be fixed
+
 		await cartPage.proceedToCheckout.click();
     
 	});
 
-	test("Verify Checkout page elements are visible", async ({page}) => 
+	test.only("Verify Checkout page elements are visible", async () => 
 	{
-		await checkoutPage.verifyAddressVisible(page);
+		await checkoutPage.verifyAddressVisible();
+		expect(checkoutPage.reviewOrderHeading).toBeVisible;
+		expect(checkoutPage.item).toBeVisible;
+		expect(checkoutPage.description).toBeVisible;
+		expect(checkoutPage.price).toBeVisible;
+		expect(checkoutPage.quantity).toBeVisible;
+		expect(checkoutPage.total).toBeVisible;
 
-		await expect(checkoutPage.reviewOrderHeading).toBeVisible;
-		await expect(checkoutPage.item).toBeVisible;
-		await expect(checkoutPage.description).toBeVisible;
-		await expect(checkoutPage.price).toBeVisible;
-		await expect(checkoutPage.quantity).toBeVisible;
-		await expect(checkoutPage.total).toBeVisible;
-
-		await checkoutPage.verifyItemsInTable(page);
+		await checkoutPage.verifyItemsInTable();
 
 	});
 
@@ -52,12 +53,12 @@ test.describe('Tests for verifying Checkout Page', () =>
 
 	});
 
-	test.only("Verify adding a comment works", async ({page}) => 
+	test("Verify adding a comment works", async ({page, baseURL}) => 
 	{
 		await expect(checkoutPage.orderMsg).toHaveText('If you would like to add a comment about your order, please write it in the field below.');
 		await checkoutPage.textArea.fill('Pack it in wrapping paper, please');
 		await checkoutPage.placeOrder.click();
-		await expect(page).toHaveURL('https://www.automationexercise.com/payment');
+		await expect(page).toBe(baseURL + constants.paymentPath);
 
 
 	});

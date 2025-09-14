@@ -99,10 +99,10 @@ test.describe('Tests for registering new users - different approaches', () =>
 		await signupPage.registerUserFromCountry(testData.SingaporeUser);
 	});
 
-	test("Try to register with existing user", async () => 
+	test("Try to register with existing user", async ({page}) => 
 	{
-		await signupPage.enterName(testData.existingUser.email);
-		await signupPage.signupEmail.fill(testData.existingUser.password);
+		await signupPage.enterName(testData.existingUser.name);
+		await signupPage.signupEmail.fill(testData.existingUser.email);
 		await signupPage.signupButton.click();
 		await expect(signupPage.existingEmailError).toBeVisible();
 

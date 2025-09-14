@@ -64,7 +64,7 @@ export class CheckoutPage
 
 	}
 
-	async verifyAddressVisible(page: Page) 
+	async verifyAddressVisible() 
 	{
 		const count = await this.addressItem.count();
 
@@ -80,7 +80,7 @@ export class CheckoutPage
 		}
 	}
 
-	async verifyItemsInTable(page: Page) 
+	async verifyItemsInTable() 
 	{
 
 		const count = await this.cartItem.count();
@@ -101,7 +101,7 @@ export class CheckoutPage
 	async calculateTotalPrice(page: Page) 
 	{
 		const count = await this.cartItem.count();
-		let totalAmount = 0; // accumulator outside loop
+		let totalAmount = 0; 
 
 		for (let i = 0; i < count; i++) 
 		{
@@ -129,7 +129,7 @@ export class CheckoutPage
 			totalAmount += expectedTotal;
 		}
 
-		// ✅ Now check the grand total in UI (example selector)
+		// check the grand total in UI (example selector)
 		const grandTotalText = await page.locator('tr', { hasText: 'Total Amount' })
 			.locator('.cart_total_price')
 			.innerText(); 

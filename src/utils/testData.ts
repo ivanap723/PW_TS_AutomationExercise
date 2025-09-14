@@ -167,6 +167,7 @@ export const SingaporeUser: User = {
 
 export interface CredentialPair
 {
+	name?: string;
 	email: string;
 	password: string;
 
@@ -174,6 +175,7 @@ export interface CredentialPair
 
 export const  existingUser: CredentialPair =
 {
+	name: 'Peter',
 	email: 'test_user123@test.com',
 	password: 'Cheescake123.'
 };
