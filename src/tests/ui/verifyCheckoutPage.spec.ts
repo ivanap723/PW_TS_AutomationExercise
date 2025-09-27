@@ -25,14 +25,11 @@ test.describe('Tests for verifying Checkout Page', () =>
 		await loginPage.performLogin(existingUser);
 		await productsPage.addProductToCart(constants.secondProduct, true);
 		await productsPage.addProductToCart(constants.thirdProduct, false);
-		await cartPage.page.waitForTimeout(2000);
-		await productsPage.viewCartLink.click(); // to be fixed
-
 		await cartPage.proceedToCheckout.click();
     
 	});
 
-	test.only("Verify Checkout page elements are visible", async () => 
+	test("Verify Checkout page elements are visible", async () => 
 	{
 		await checkoutPage.verifyAddressVisible();
 		expect(checkoutPage.reviewOrderHeading).toBeVisible;
@@ -58,7 +55,7 @@ test.describe('Tests for verifying Checkout Page', () =>
 		await expect(checkoutPage.orderMsg).toHaveText('If you would like to add a comment about your order, please write it in the field below.');
 		await checkoutPage.textArea.fill('Pack it in wrapping paper, please');
 		await checkoutPage.placeOrder.click();
-		await expect(page).toBe(baseURL + constants.paymentPath);
+		await expect(page).toHaveURL(baseURL + constants.paymentPath);
 
 
 	});

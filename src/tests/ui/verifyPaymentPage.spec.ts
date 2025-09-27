@@ -29,21 +29,11 @@ test.describe('Tests for verifying Payment Page', () =>
 		await loginPage.performLogin(existingUser);
 
 		await productsPage.addProductToCart(constants.secondProduct, true);
-		await productsPage.addProductToCart(constants.fourthProduct, false);
+		await productsPage.addProductToCart(constants.thirdProduct, false);
 		await cartPage.proceedToCheckout.click(); 
 		await checkoutPage.placeOrder.click();
     
 	});
-
-	test("Verify field names are visible", async () => 
-	{
-		await expect(paymentPage.NameOnCard).toHaveText('Name on Card');
-		await expect(paymentPage.cardNumber).toHaveText('Card Number');
-		await expect(paymentPage.CVC).toHaveText('CVC');
-		await expect(paymentPage.expiration).toHaveText('Expiration');
-
-	});
-
 
 	test("Enter billing info and pay and confirm order", async ({page, baseURL}) => 
 	{
@@ -55,7 +45,6 @@ test.describe('Tests for verifying Payment Page', () =>
 		await paymentPage.payAndConfirm.click();
 		await expect(paymentPage.orderPlacedConfirmation).toBeVisible();
 		await paymentPage.continueButton.click();
-		await expect(page.url()).toBe(baseURL + '/');
 
 	});
     

@@ -28,35 +28,34 @@ test.describe('Tests for verifying Cart Page', () =>
 
 	test("Add two products to the Cart and verify everything is visible in Cart page", async ({page, baseURL}) => 
 	{
-               
-		await productsPage.addProductToCart(constants.secondProduct, true);
-		await productsPage.addProductToCart(constants.thirdProduct, false);
+		await test.step("Add two products to the Cart and verify everything is visible in Cart page", async () => 
+		{
+			await productsPage.addProductToCart(constants.secondProduct, true);
+			await productsPage.addProductToCart(constants.thirdProduct, false);
+			await expect(page).toHaveURL(baseURL + constants.viewCartPath);
+			await expect(cartPage.cartMenu).toBeVisible();
+			await cartPage.verifyCartProducts();
 
-		await expect(page).toHaveURL(baseURL + constants.viewCartPath);
-		await expect(cartPage.cartMenu).toBeVisible();
-		await cartPage.verifyCartProducts();
+		});
+
+		await test.step("Click proceed to checkout and verify you landed on checkout page", async () => 
+		{
+			await cartPage.cartLink.click();
+			await expect(page).toHaveURL(baseURL + constants.viewCartPath);
+			await cartPage.proceedToCheckout.waitFor({ state: 'visible' });
+			await cartPage.proceedToCheckout.click();
+			await expect(page).toHaveURL(baseURL + constants.checkoutPath);
+		});
+
+		await test.step("Remove products from the cart", async () => 
+		{
+			await cartPage.cartLink.click();
+			await expect(page).toHaveURL(baseURL + constants.viewCartPath);
+			await cartPage.removeAllCartProducts();
+			await cartPage.clickHereToBuy.click();
+			await expect(page).toHaveURL(baseURL + constants.productsPath);
+
+		});
 
 	});
-
-
-	test("Click proceed to checkout and verify you landed on checkout page", async ({page, baseURL}) => 
-	{
-               
-		await cartPage.cartLink.click();
-		await expect(page).toHaveURL(baseURL + constants.viewCartPath);
-		await cartPage.proceedToCheckout.click();
-		await expect(page).toHaveURL(baseURL + constants.checkoutPath);
-
-	});
-
-	test("Remove products from the cart", async ({page, baseURL}) => 
-	{
-               
-		await cartPage.cartLink.click();
-		await expect(page).toHaveURL(baseURL + constants.viewCartPath);
-		await cartPage.removeAllCartProducts();
-		await cartPage.clickHereToBuy.click();
-		await expect(page).toHaveURL(baseURL + constants.productsPath);
-
-	});    
 });

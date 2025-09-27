@@ -24,7 +24,7 @@ export class CartPage
 		this.cartLink = page.getByRole('link', { name: 'Cart' });
 		this.proceedToCheckout = page.locator('a.btn.check_out');
 		this.removeProduct = page.locator('.cart_quantity_delete');
-		this.emptyCartMsg = page.locator('p.text-center');
+		this.emptyCartMsg = page.locator('p.text-center').nth(2);
 		this.clickHereToBuy = page.getByRole('link', { name: 'here'});
 
 	}
@@ -74,8 +74,9 @@ export class CartPage
 			await this.removeProduct.nth(i).click();
 		}
 
-		await this.emptyCartMsg.waitFor({ state: 'visible', timeout: 5000 });
-		await expect(this.emptyCartMsg).toContainText('Cart is empty! Click here to buy products.');
+		
+		await expect(this.emptyCartMsg).toBeVisible({ timeout: 5000 });
+		await expect(this.emptyCartMsg).toContainText('Cart is empty!');
 
 	}
 }

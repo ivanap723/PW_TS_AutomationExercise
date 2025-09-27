@@ -58,7 +58,7 @@ export class ProductsPage
 	{
 		const productContainer = this.page.locator('.product-image-wrapper').nth(ordinalNum);
 		await productContainer.hover();
-		await this.page.waitForTimeout(2000);
+		await this.page.waitForTimeout(3000);
 
 		const addToCartButton = productContainer.locator('.product-overlay .add-to-cart');
   		await addToCartButton.waitFor({ state: 'visible', timeout: 5000 });
@@ -66,10 +66,12 @@ export class ProductsPage
 
 		if(proceed)
 		{
+			await this.continueShoppingButton.waitFor({ state: 'visible', timeout: 3000 });
 			await this.continueShoppingButton.click();
 		}
 		else 
 		{
+			await this.viewCartLink.waitFor({ state: 'visible', timeout: 3000 });
 			await this.viewCartLink.click();
 		}
 		
