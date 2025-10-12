@@ -163,6 +163,14 @@ export const SingaporeUser: User = {
 	country: 'Singapore'
 };
 
+//--------------------------product data ---------------------------------------
+
+export interface Product {
+  id: string;
+  name: string;
+  [key: string]: any;
+}
+
 //--------------------------user data for logging in----------------------------
 
 export interface CredentialPair
