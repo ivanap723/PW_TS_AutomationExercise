@@ -1,5 +1,4 @@
-import { expect, type Locator, type Page } from '@playwright/test';
-import { time } from 'console';
+import { type Locator, type Page } from '@playwright/test';
 
 export class ProductsPage 
 {
@@ -48,8 +47,8 @@ export class ProductsPage
 		this.addToCartOverlay = page.locator('.add-to-cart');
 		this.addedModal = page.locator('h4.modal-title.w-100');
 		this.addedModalText = (page.locator('p.text-center', { hasText: 'added to cart' }));
-		this.viewCartLink = page.locator('a', { hasText: 'View Cart' });
-		this.continueShoppingButton = page.getByRole('button', { name: 'Continue Shopping' });
+		this.viewCartLink = page.locator('a, button').filter({ hasText: /View Cart/i });
+		this.continueShoppingButton = page.locator('a, button').filter({ hasText: /Continue Shopping/i });
 
 
 	}
@@ -58,21 +57,24 @@ export class ProductsPage
 	{
 		const productContainer: Locator = this.page.locator('.product-image-wrapper').nth(ordinalNum);
 		await productContainer.hover();
-		await this.page.waitForTimeout(3000);
 
 		const addToCartButton: Locator = productContainer.locator('.product-overlay .add-to-cart');
 		await addToCartButton.waitFor({ state: 'visible', timeout: 5000 });
 		await addToCartButton.click({ force: true });
 
+		const modalActionTimeout = 20000;
+
 		if(proceed)
 		{
-			await this.continueShoppingButton.waitFor({ state: 'visible', timeout: 3000 });
-			await this.continueShoppingButton.click();
+			await this.continueShoppingButton.waitFor({ state: 'attached', timeout: modalActionTimeout });
+			await this.page.waitForTimeout(2000);
+			await this.continueShoppingButton.click({ force: true, timeout: 10000 });
 		}
-		else 
+		else
 		{
-			await this.viewCartLink.waitFor({ state: 'visible', timeout: 3000 });
-			await this.viewCartLink.click();
+			await this.viewCartLink.waitFor({ state: 'attached', timeout: modalActionTimeout });
+			await this.page.waitForTimeout(2000);
+			await this.viewCartLink.click({ force: true, timeout: 10000 });
 		}
 		
 	}

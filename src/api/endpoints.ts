@@ -1,4 +1,4 @@
-export const baseURL = 'https://automationexercise.com/';
+import { apiBaseUrl } from '../utils/constants';
 
-export const productListEndpoint = `${baseURL}api/productsList`; 
-export const productSearchEndpoint = `${baseURL}api/searchProduct`;
+export const productListEndpoint = `${apiBaseUrl}api/productsList`;
+export const productSearchEndpoint = `${apiBaseUrl}api/searchProduct`;

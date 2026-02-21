@@ -1,64 +1,42 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect } from '../fixtures';
 import { CheckoutPage } from '../../pages/CheckoutPage';
 import { CartPage } from '../../pages/CartPage';
-import { ProductsPage } from '../../pages/ProductsPage';
-import { LoginPage } from '../../pages/LoginPage';
-import { existingUser } from '../../utils/testData';
 import * as constants from '../../utils/constants';
 
-test.describe('Tests for verifying Checkout Page', () => 
+test.describe('Tests for verifying Checkout Page', () =>
 {
-
 	let checkoutPage: CheckoutPage;
-	let loginPage: LoginPage;
 	let cartPage: CartPage;
-	let productsPage: ProductsPage;
 
-	test.beforeEach(async ({ page }) => 
+	test.beforeEach(async ({ cartWithTwoProductsPage }) =>
 	{
-		checkoutPage = new CheckoutPage(page);
-		productsPage = new ProductsPage(page);
-		cartPage = new CartPage(page);
-		loginPage = new LoginPage(page);
-
-		await loginPage.visitLoginPage();
-		await loginPage.performLogin(existingUser);
-		await productsPage.addProductToCart(constants.secondProduct, true);
-		await productsPage.addProductToCart(constants.thirdProduct, false);
+		checkoutPage = new CheckoutPage(cartWithTwoProductsPage);
+		cartPage = new CartPage(cartWithTwoProductsPage);
 		await cartPage.proceedToCheckout.click();
-    
 	});
 
-	test("Verify Checkout page elements are visible", async () => 
+	test("Verify Checkout page elements are visible", async () =>
 	{
 		await checkoutPage.verifyAddressVisible();
-		expect(checkoutPage.reviewOrderHeading).toBeVisible;
-		expect(checkoutPage.item).toBeVisible;
-		expect(checkoutPage.description).toBeVisible;
-		expect(checkoutPage.price).toBeVisible;
-		expect(checkoutPage.quantity).toBeVisible;
-		expect(checkoutPage.total).toBeVisible;
-
+		await expect(checkoutPage.reviewOrderHeading).toBeVisible();
+		await expect(checkoutPage.item).toBeVisible();
+		await expect(checkoutPage.description).toBeVisible();
+		await expect(checkoutPage.price).toBeVisible();
+		await expect(checkoutPage.quantity).toBeVisible();
+		await expect(checkoutPage.total).toBeVisible();
 		await checkoutPage.verifyItemsInTable();
-
 	});
 
-	test("Verify total price is calculated correctly", async ({page}) => 
+	test("Verify total price is calculated correctly", async ({ cartWithTwoProductsPage }) =>
 	{
-
-		await checkoutPage.calculateTotalPrice(page);
-
+		await checkoutPage.calculateTotalPrice(cartWithTwoProductsPage);
 	});
 
-	test("Verify adding a comment works", async ({page, baseURL}) => 
+	test("Verify adding a comment works", async ({ cartWithTwoProductsPage, baseURL }) =>
 	{
 		await expect(checkoutPage.orderMsg).toHaveText('If you would like to add a comment about your order, please write it in the field below.');
 		await checkoutPage.textArea.fill('Pack it in wrapping paper, please');
 		await checkoutPage.placeOrder.click();
-		await expect(page).toHaveURL(baseURL + constants.paymentPath);
-
-
+		await expect(cartWithTwoProductsPage).toHaveURL(baseURL + constants.paymentPath);
 	});
-
-    
 });

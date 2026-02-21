@@ -1,6 +1,9 @@
+// Base URL for UI – single source: used by playwright.config and for full-URL assertions (e.g. SignupPage). Specs use baseURL from test context (which is set from this) + path constants below.
+export const baseUrl = 'https://www.automationexercise.com/';
+// Base URL for API (no www; used by endpoints)
+export const apiBaseUrl = 'https://automationexercise.com/';
 
-
-//Login info
+// Paths (relative to baseUrl)
 export const loginPath = 'login';
 export const productsPath = 'products';
 export const productDetailsPath = 'product_details';

@@ -1,41 +1,24 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect } from '../fixtures';
 import { PaymentPage } from '../../pages/PaymentPage';
-import { CartPage } from '../../pages/CartPage';
-import { ProductsPage } from '../../pages/ProductsPage';
-import { LoginPage } from '../../pages/LoginPage';
-import * as constants from '../../utils/constants';
 import { CheckoutPage } from '../../pages/CheckoutPage';
-import { existingUser } from '../../utils/testData';
+import { CartPage } from '../../pages/CartPage';
+import * as constants from '../../utils/constants';
 
-test.describe('Tests for verifying Payment Page', () => 
+test.describe('Tests for verifying Payment Page', () =>
 {
-
 	let paymentPage: PaymentPage;
 	let checkoutPage: CheckoutPage;
-	let loginPage: LoginPage;
-	let cartPage: CartPage;
-	let productsPage: ProductsPage;
 
-
-	test.beforeEach(async ({ page }) => 
+	test.beforeEach(async ({ cartWithTwoProductsPage }) =>
 	{
-		paymentPage = new PaymentPage(page);
-		productsPage = new ProductsPage(page);
-		checkoutPage = new CheckoutPage(page);
-		cartPage = new CartPage(page);
-		loginPage = new LoginPage(page);
-
-		await loginPage.visitLoginPage();
-		await loginPage.performLogin(existingUser);
-
-		await productsPage.addProductToCart(constants.secondProduct, true);
-		await productsPage.addProductToCart(constants.thirdProduct, false);
-		await cartPage.proceedToCheckout.click(); 
+		paymentPage = new PaymentPage(cartWithTwoProductsPage);
+		checkoutPage = new CheckoutPage(cartWithTwoProductsPage);
+		const cartPage = new CartPage(cartWithTwoProductsPage);
+		await cartPage.proceedToCheckout.click();
 		await checkoutPage.placeOrder.click();
-    
 	});
 
-	test("Enter billing info and pay and confirm order", async ({page, baseURL}) => 
+	test("Enter billing info and pay and confirm order", async () =>
 	{
 		await paymentPage.NameField.fill(constants.CreditCardName);
 		await paymentPage.CCNumberField.fill(constants.CreditCardNumber);
@@ -45,7 +28,5 @@ test.describe('Tests for verifying Payment Page', () =>
 		await paymentPage.payAndConfirm.click();
 		await expect(paymentPage.orderPlacedConfirmation).toBeVisible();
 		await paymentPage.continueButton.click();
-
 	});
-    
 });

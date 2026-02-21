@@ -1,14 +1,15 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig } from '@playwright/test';
+import { baseUrl } from './src/utils/constants';
 
 export default defineConfig({
+	testDir: 'src/tests',
 	reporter: "html",
 	fullyParallel: true,
 	workers: 3,
 	timeout: 60000,
 	use: {
 		trace: "on",
-		baseURL: 'https://www.automationexercise.com/',
+		baseURL: baseUrl,
 		viewport: { width: 2560, height: 1440 }
 	},
-
 });

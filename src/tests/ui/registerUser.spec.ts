@@ -40,7 +40,7 @@ test.describe('Tests for registering new users - different approaches', () =>
 		await signupPage.checkEmailField(userData.email);
 		await signupPage.password.fill(userData.password);
         
-		await signupPage.setRandomBirhday(); 
+		await signupPage.setRandomBirthday(); 
 		await signupPage.clickCheckbox(signupPage.checkboxNewsletter);
 		await signupPage.clickCheckbox(signupPage.checkboxSpecialOffers);
 

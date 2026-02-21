@@ -41,19 +41,24 @@ export class CheckoutPage
 	{
 
 		this.page = page;
-	    //addresses        
-		this.addressItem = page.locator('.col-xs-12 col-sm-6');
+	    //addresses
+		this.addressItem = page.locator('.col-xs-12.col-sm-6');
 		this.addressDetailsHeading = page.locator('#address_delivery');
 		this.billingAddressHeading = page.locator('#address_invoice');
-		this.Name = page.locator('.address_firstname address_lastname');
-		this.Address1 = page.locator('.address_address1 address_address2');
-		this.CityStatePostCode = page.locator('.address_city address_state_name address_postcode');
+		this.Name = page.locator('.address_firstname.address_lastname');
+		this.Address1 = page.locator('.address_address1.address_address2');
+		this.CityStatePostCode = page.locator('.address_city.address_state_name.address_postcode');
 		this.Country = page.locator('.address_country_name');
 		this.Phone = page.locator('.address_phone');
 
 		//order table
 		this.reviewOrderHeading = page.getByRole('heading', { name: 'Review Your Order' });
 		this.cartItem = page.locator('tbody tr[id^="product-"]');
+		this.item = page.locator('td.cart_product');
+		this.description = page.locator('td.cart_description');
+		this.price = page.locator('td.cart_price');
+		this.quantity = page.locator('td.cart_quantity');
+		this.total = page.locator('td.cart_total');
 
 		//order comment
 		this.orderMsg = page.locator('#ordermsg label');

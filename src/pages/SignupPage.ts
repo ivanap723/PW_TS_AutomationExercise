@@ -1,31 +1,35 @@
 import { expect, type Locator, type Page } from '@playwright/test';
-import { loginPath } from '../utils/constants';
+import { baseUrl, loginPath } from '../utils/constants';
 import * as testData from '../utils/testData';
-import * as constants from '../utils/constants';
 
 export class SignupPage 
 {
-//login page
 	readonly page: Page;
-	readonly signupButton: Locator;
-	readonly signupHeading: Locator;
-	readonly signupName: Locator;
-	readonly signupEmail: Locator;
-	readonly existingEmailError: Locator;
-	//signup page - enter account info
-	readonly signupForm: Locator;
-	readonly optionMrs: Locator;
-	readonly optionMr: Locator;
-	readonly nameField: Locator;
-	readonly emailField: Locator;
-	readonly password: Locator;
-	readonly birthDays: Locator;
-	readonly birthMonths: Locator;
-	readonly birthYears: Locator;
-	readonly checkboxNewsletter: Locator;
-	readonly checkboxSpecialOffers: Locator;
-	//signup page - address information
-	readonly firstName: Locator;
+	// Try to use role-based, text-based, or test-id-based locators where possible for resilience
+
+	readonly signupButton: Locator; // kept getByRole, resilient
+	readonly signupHeading: Locator; // kept getByRole, resilient
+
+	readonly signupName: Locator; // uses [data-qa], resilient
+	readonly signupEmail: Locator; // uses [data-qa], resilient
+
+	readonly existingEmailError: Locator; // brittle: matches full text, could be better with role or data-qa, else keep as-is if no better selector exists
+
+	// signup page - enter account info
+	readonly signupForm: Locator; // uses class, fragile if style changes; if possible use 'form[data-qa="signup-form"]'
+	readonly optionMrs: Locator; // by id, resilient
+	readonly optionMr: Locator; // by id, resilient
+	readonly nameField: Locator; // by id, resilient
+	readonly emailField: Locator; // by id, resilient
+	readonly password: Locator; // by id, resilient
+	readonly birthDays: Locator; // by id, resilient
+	readonly birthMonths: Locator; // by id, resilient
+	readonly birthYears: Locator; // by id, resilient
+	readonly checkboxNewsletter: Locator; // by id, resilient
+	readonly checkboxSpecialOffers: Locator; // by id, resilient
+
+	// signup page - address information
+	readonly firstName: Locator; // by id, resilient
 	readonly lastName: Locator;
 	readonly company: Locator;
 	readonly address1: Locator;
@@ -35,15 +39,20 @@ export class SignupPage
 	readonly city: Locator;
 	readonly zip: Locator;
 	readonly phone: Locator;
-	readonly submitButton: Locator;
-	//account created
-	readonly accountCreated: Locator;
-	readonly continueButton: Locator;
-	readonly categoryHeading: Locator;
-	readonly loggedInAs: Locator;
-	//deleting account
-	readonly deleteAccount: Locator;
-	readonly accountDeleted: Locator;
+
+	// above address fields are by id, resilient
+
+	readonly submitButton: Locator; // using getByRole, resilient
+
+	// account created
+	readonly accountCreated: Locator; // using getByRole, resilient
+	readonly continueButton: Locator; // using getByRole, resilient
+	readonly categoryHeading: Locator; // using getByRole, resilient
+	readonly loggedInAs: Locator; // brittle: matches partial text, more resilient to select by a unique test-id or aria-label if available
+
+	// deleting account
+	readonly deleteAccount: Locator; // also brittle like above, 'text=Delete Account', better with a button role or test-id
+	readonly accountDeleted: Locator; // using getByRole, resilient
 
 
 	constructor(page: Page) 
@@ -78,8 +87,8 @@ export class SignupPage
 		this.accountCreated = page.getByRole('heading', { name: 'Account Created!' });
 		this.continueButton = page.getByRole('link', { name: 'Continue'});
 		this.categoryHeading = page.getByRole('heading', { name: 'Category' });
-		this.loggedInAs = page.locator('text=Logged in as ');
-		this.deleteAccount = page.locator('text=Delete Account');
+		this.loggedInAs = page.getByText(/Logged in as/);
+		this.deleteAccount = page.getByRole('link', { name: ' Delete Account'});
 		this.accountDeleted = page.getByRole('heading', { name: 'Account Deleted!' });
 		this.existingEmailError = page.locator('text=Email Address already exist!');
     
@@ -127,9 +136,8 @@ export class SignupPage
 		expect(value).toEqual(email);
 	}
 
-	async setRandomBirhday()
+	async setRandomBirthday()
 	{
-
 		const minYear = 1900;
 		const maxYear = 2021;
 		const randomDay = Math.floor(Math.random() * 31) + 1;
@@ -139,19 +147,16 @@ export class SignupPage
 		await this.birthDays.selectOption(randomDay.toString());
 		await this.birthMonths.selectOption(randomMonth.toString());
 		await this.birthYears.selectOption(randomYear.toString());
-    
-
 	}
 
 	async clickCheckbox(element: Locator)
 	{
-		element.click({ force: true });
+		await element.click({ force: true });
 	}
 
 	async selectCountry(country: string)
 	{
-		this.country.selectOption(country);
-    
+		await this.country.selectOption(country);
 	}
 
 	async registerUserFromCountry(user: testData.User)
@@ -170,7 +175,7 @@ export class SignupPage
 		await this.checkEmailField(testData.getGeneratedEmail());
 		await this.password.fill(testData.existingUser.password);
         
-		await this.setRandomBirhday(); 
+		await this.setRandomBirthday(); 
 		await this.clickCheckbox(this.checkboxNewsletter);
 		await this.clickCheckbox(this.checkboxSpecialOffers);
 
@@ -191,13 +196,13 @@ export class SignupPage
 		await expect(this.accountCreated).toBeVisible();
 		await this.continueButton.click();
 		await expect(this.categoryHeading).toBeVisible();
-		await expect(this.page.locator(`text=Logged in as ${user.firstName}`)).toBeVisible();
+		await expect(this.loggedInAs).toContainText(user.firstName);
 
 		//delete account
 		await this.deleteAccount.click();
 		await expect(this.accountDeleted).toBeVisible();
 		await this.continueButton.click();
-		await expect(this.page).toHaveURL("https://www.automationexercise.com/");
+		await expect(this.page).toHaveURL(baseUrl);
 
 	}
 }

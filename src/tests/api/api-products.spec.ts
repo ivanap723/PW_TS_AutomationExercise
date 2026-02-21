@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
-import { productListEndpoint, productSearchEndpoint } from "../../api/endpoints";
+import { productListEndpoint } from "../../api/endpoints";
 import { ProductListSchema } from '../../api/schemas/productsList';
 import { Product } from '../../utils/testData';
 import * as utilities from '../../api/utilities';
@@ -18,7 +18,7 @@ test('should GET list of all products and get status 200', async ({ request }) =
 
 });
 
-test.only('should POST to search product with one parameter and get status 200', async ({ request }) => 
+test('should POST to search product with one parameter and get status 200', async ({ request }) => 
 {
 	const keyword = 'white top';
 	const products = await utilities.searchProducts(request, keyword);

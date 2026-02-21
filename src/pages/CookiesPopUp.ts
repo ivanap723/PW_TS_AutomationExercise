@@ -13,8 +13,12 @@ export class CookiesPopUp
 
 	async clickConsent()
 	{
-
-		await this.page.getByRole('button', { name: 'Consent' }).click();
-
+		const consentButton = this.page.getByRole('button', {
+			name: /Consent|Dismiss privacy and legal settings display/i
+		});
+		if (await consentButton.isVisible({ timeout: 5000 }).catch(() => false))
+		{
+			await consentButton.click();
+		}
 	}
 }

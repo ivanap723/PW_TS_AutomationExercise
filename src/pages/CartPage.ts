@@ -24,7 +24,7 @@ export class CartPage
 		this.cartLink = page.getByRole('link', { name: 'Cart' });
 		this.proceedToCheckout = page.locator('a.btn.check_out');
 		this.removeProduct = page.locator('.cart_quantity_delete');
-		this.emptyCartMsg = page.locator('p.text-center').nth(2);
+		this.emptyCartMsg = page.locator('p.text-center', { hasText: 'Cart is empty!' });
 		this.clickHereToBuy = page.getByRole('link', { name: 'here'});
 
 	}
