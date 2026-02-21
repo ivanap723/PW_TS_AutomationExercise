@@ -34,7 +34,7 @@ export class LoginPage
 
 	}
 
-	async performLogin(loginUser)
+	async performLogin(loginUser: { email: string; password: string })
 	{
 		await this.emailField.fill(loginUser.email);
 		await this.passwordField.fill(loginUser.password);

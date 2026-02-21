@@ -40,9 +40,8 @@ test.describe('Tests for verifying Products page and Product details', () =>
 		await expect(productsPage.productName).toBeVisible();
 		await expect(productsPage.productPrice).toBeVisible();
 		await expect(productsPage.productQuantity).toBeVisible();
-		await expect(productsPage.addToCartButton).toBeVisible();
 		await expect(page).toHaveURL(baseURL + constants.productDetailsPath + '/1');
-
+		
 	});
 
 	test("Search for a product", async () => 

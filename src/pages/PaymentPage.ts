@@ -8,7 +8,6 @@ export class PaymentPage
 	readonly NameField: Locator;
 	readonly CCNumberField: Locator;
 	readonly CVC: Locator;
-	readonly CVCField: Locator;
 	readonly expMonthField: Locator;
 	readonly expYearField: Locator;
 

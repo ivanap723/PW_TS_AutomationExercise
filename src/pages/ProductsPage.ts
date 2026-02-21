@@ -54,14 +54,14 @@ export class ProductsPage
 
 	}
 
-	async addProductToCart(ordinalNum, proceed?)
+	async addProductToCart(ordinalNum: number, proceed?: boolean): Promise<void>
 	{
-		const productContainer = this.page.locator('.product-image-wrapper').nth(ordinalNum);
+		const productContainer: Locator = this.page.locator('.product-image-wrapper').nth(ordinalNum);
 		await productContainer.hover();
 		await this.page.waitForTimeout(3000);
 
-		const addToCartButton = productContainer.locator('.product-overlay .add-to-cart');
-  		await addToCartButton.waitFor({ state: 'visible', timeout: 5000 });
+		const addToCartButton: Locator = productContainer.locator('.product-overlay .add-to-cart');
+		await addToCartButton.waitFor({ state: 'visible', timeout: 5000 });
 		await addToCartButton.click({ force: true });
 
 		if(proceed)

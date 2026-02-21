@@ -3,7 +3,7 @@ import { LoginPage } from '../../pages/LoginPage';
 import { existingUser, existingUserWrongPass, inexistingUser } from '../../utils/testData';
 import { loginPath } from '../../utils/constants';
 
-test.describe('Tests for login with wrong and correct credentials', () => 
+test.describe('Tests for logging in with wrong and correct credentials', () => 
 {
 
 	let loginPage: LoginPage;
@@ -18,7 +18,7 @@ test.describe('Tests for login with wrong and correct credentials', () =>
 	test("Try logging in with incorrect email", async ({page, }) => 
 	{
 		await loginPage.performLogin(inexistingUser);
-		await expect(page.locator('text=Your email or password is incorrect!')).toBeVisible(); //napravi metodu u page objectu
+		await expect(page.locator('text=Your email or password is incorrect!')).toBeVisible(); 
 	});
 
 	test("Try logging in with incorrect password", async ({page}) => 
