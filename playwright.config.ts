@@ -11,6 +11,6 @@ export default defineConfig({
 	use: {
 		trace: "on",
 		baseURL: baseUrl,
-		viewport: { width: 2560, height: 1440 }
+		viewport: { width: 1280, height: 720 }
 	},
 });
