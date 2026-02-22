@@ -1,0 +1,13 @@
+Total products in cart: 2
+Product 1:
+  Name: Men Tshirt
+  Category: Men > Tshirts
+  Price: Rs. 400
+  Quantity: 1
+  Total: Rs. 400
+Product 2:
+  Name: Sleeveless Dress
+  Category: Women > Dress
+  Price: Rs. 1000
+  Quantity: 1
+  Total: Rs. 1000
