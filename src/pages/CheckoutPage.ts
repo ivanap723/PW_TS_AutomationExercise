@@ -77,8 +77,10 @@ export class CheckoutPage
 		{
 			const row = this.addressItem.nth(i);
 
-			await expect(row.locator('.address_firstname.address_lastname')).toBeVisible();
-			await expect(row.locator('.address_address1.address_address2')).toBeVisible();
+			await expect(row.locator('.address_firstname.address_lastname')).toBeVisible(); 
+			await expect(row.locator('.address_address1.address_address2').nth(0)).toBeVisible();
+			await expect(row.locator('.address_address1.address_address2').nth(1)).toBeVisible(); 
+			await expect(row.locator('.address_address1.address_address2').nth(2)).toBeVisible(); 
 			await expect(row.locator('.address_city.address_state_name.address_postcode')).toBeVisible();
 			await expect(row.locator('.address_country_name')).toBeVisible();
 			await expect(row.locator('.address_phone')).toBeVisible();
