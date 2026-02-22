@@ -1,0 +1,14 @@
+{
+  responseCode: 200,
+  products: [
+    {
+      id: 6,
+      name: 'Summer White Top',
+      price: 'Rs. 400',
+      brand: 'H&M',
+      category: [Object]
+    }
+  ]
+}
+Found 1 product(s):
+- Summer White Top
