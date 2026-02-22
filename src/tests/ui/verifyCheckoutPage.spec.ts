@@ -17,6 +17,7 @@ test.describe('Tests for verifying Checkout Page', () =>
 
 	test("Verify Checkout page elements are visible", async () =>
 	{
+		
 		await checkoutPage.verifyAddressVisible();
 		await expect(checkoutPage.reviewOrderHeading).toBeVisible();
 		await expect(checkoutPage.item).toBeVisible();

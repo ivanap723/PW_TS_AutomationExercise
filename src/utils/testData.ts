@@ -177,7 +177,7 @@ export interface CredentialPair
 {
 	name?: string;
 	email: string;
-	password: string;
+	password: any;
 
 }
 
@@ -185,7 +185,7 @@ export const  existingUser: CredentialPair =
 {
 	name: 'Peter',
 	email: 'test_user123@test.com',
-	password: 'Cheescake123.'
+	password: process.env.USER_PASSWORD
 };
 
 export const  inexistingUser: CredentialPair =
